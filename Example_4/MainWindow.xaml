@@ -5,8 +5,99 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Example_4"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="525"
+        DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
+
+    <Window.Resources>
+        <!--<Style TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="5" Background="SkyBlue" BorderThickness="1" BorderBrush="Black">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>-->
+
+        <Style TargetType="Button">
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <Style TargetType="Border" x:Key="ButtonCorners">
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="Background" Value="SkyBlue"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="4*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <!--<Border Style="{StaticResource ButtonCorners}">-->
+                <Button Content="Act as Client" Command="{Binding ClientBtnClicked}"/>
+            <!--</Border>-->
+            <Button Content="Act as Server" Margin="8,0,0,0" Command="{Binding ServerBtnClicked}"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="103*"/>
+                <ColumnDefinition Width="104*"/>
+                <ColumnDefinition Width="103*"/>
+                <ColumnDefinition Width="66*"/>
+                <ColumnDefinition Width="38*"/>
+                <ColumnDefinition Width="103*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Content="Prod Id"/>
+            <Label Content="Name" Grid.Column="1"/>
+            <Label Content="Price" Grid.Column="2"/>
+            <Label Content="Type" Grid.Column="3" Grid.ColumnSpan="2"/>
+
+            <TextBox Height="20"  Grid.Row="1" Margin="0,4,0,3" Text="{Binding ProductID}"/>
+            <TextBox Height="20" Grid.Row="1" Grid.Column="1" Margin="2,4,2,3" Text="{Binding Name}"/>
+            <TextBox Height="20" Grid.Row="1" Grid.Column="2" Margin="2,4,2,3" Text="{Binding Price}"/>
+            <ComboBox Height="20" Grid.Row="1" Grid.Column="3" Margin="2,4,2,3" Grid.ColumnSpan="2" ItemsSource="{Binding ComboBoxList}" Text="{Binding Type}"/>
+            <Button Content="Add" Grid.Row="1" Grid.Column="5" Margin="2" Command="{Binding AddBtnClicked}"/>
+
+
+
+            <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                <Label Content="Prod Id"/>
+                <Label Content="Name"/>
+                <Label Content="Price"/>
+                <Label Content="Type"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="1">
+                <TextBox Height="20" Width="40"/>
+                <TextBox Height="20" Width="40"/>
+                <TextBox Height="20" Width="40"/>
+                <ComboBox Height="20" Width="40"/>
+                <Button Content="Add"/>
+            </StackPanel>-->
+        </Grid>
+
+        <DataGrid Grid.Row="2" AutoGenerateColumns="False" ItemsSource="{Binding ProductList}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Prod Id" Width="*" Binding="{Binding ProductID}"/>
+                <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Price" Width="*" Binding="{Binding Price}"/>
+                <DataGridTextColumn Header="Type" Width="*" Binding="{Binding Type}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
